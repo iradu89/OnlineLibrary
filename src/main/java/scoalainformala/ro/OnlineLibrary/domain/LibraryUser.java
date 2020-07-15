@@ -1,5 +1,6 @@
 package scoalainformala.ro.OnlineLibrary.domain;
 
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,9 +11,15 @@ import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class LibraryUser {
+
     @Id
-    @GeneratedValue(generator="system-uuid")
+    @GeneratedValue(generator = "system-uuid")
     private UUID id;
 
     @NotBlank
