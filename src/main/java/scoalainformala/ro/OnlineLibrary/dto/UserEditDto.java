@@ -3,6 +3,7 @@ package scoalainformala.ro.OnlineLibrary.dto;
 import lombok.ToString;
 import scoalainformala.ro.OnlineLibrary.domain.Address;
 
+import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -19,7 +20,7 @@ public class UserEditDto {
     @NotBlank
     private String password;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
     public UserEditDto(@NotBlank String name, @Email String email, @NotBlank String password, Address address) {

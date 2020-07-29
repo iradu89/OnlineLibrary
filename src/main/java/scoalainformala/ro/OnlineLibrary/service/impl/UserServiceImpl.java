@@ -12,6 +12,7 @@ import scoalainformala.ro.OnlineLibrary.service.UserService;
 import scoalainformala.ro.OnlineLibrary.transformer.EntityVsEdit;
 import scoalainformala.ro.OnlineLibrary.transformer.EntityVsInsert;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,8 +35,27 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
+    public List<UserEditDto> getAll() {
+
+        List<UserEditDto> finalList = new ArrayList<>();
+        List<LibraryUser> libList = findAll();
+
+        for (LibraryUser lib : libList) {
+        UserEditDto conv = converter.convertEntity(lib);
+        finalList.add(conv);
+        }
+        return finalList;
+    }
+
     @Override
-    public LibraryUser findByEmail(String email)  {
+    public List<LibraryUser> findAll() {
+
+        List<LibraryUser> list = userRepository.findAll();
+        return list;
+    }
+
+    @Override
+    public LibraryUser findByEmail(String email) {
 
         LibraryUser existingUser = userRepository.findByEmail(email);
         return existingUser;
@@ -63,6 +83,7 @@ public class UserServiceImpl implements UserService {
     public UserEditDto saveUserEdit(UserEditDto userEditDto) {
 
         LibraryUser libU = converter.convertDto(userEditDto);
+        userRepository.save(libU);
         return converter.convertEntity(libU);
     }
 

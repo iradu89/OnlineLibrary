@@ -12,6 +12,8 @@ import java.util.UUID;
 @Service
 public interface UserService {
 
+    public List<UserEditDto>getAll();
+
     public LibraryUser findByEmail(String email);
 
     public UserEditDto showUser(String email);
@@ -21,4 +23,6 @@ public interface UserService {
     public UserEditDto saveUserEdit(UserEditDto userEditDto);
 
     public void deleteById(UUID id);
+
+    public List<LibraryUser> findAll();
 }
