@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
 public class Address {
 
     @Id
@@ -36,5 +36,13 @@ public class Address {
         this.city = city;
         this.country = country;
         this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return streetName +
+                ", no. " + streetNumber +
+                ", " + city + ", " + country +
+                ", " + zipCode;
     }
 }

@@ -21,7 +21,7 @@ public class EntityVsInsert implements Transformer<LibraryUser, UserInsertDto> {
     public LibraryUser convertDto(UserInsertDto userInsertDto) {
 
         LibraryUser toBeRegistered = new LibraryUser();
-        BeanUtils.copyProperties(userInsertDto, toBeRegistered);
+        BeanUtils.copyProperties(userInsertDto, toBeRegistered, "confirmEmail", "confirmPassword");
         toBeRegistered.setUserRole(Role.CLIENT);
         return toBeRegistered;
     }
