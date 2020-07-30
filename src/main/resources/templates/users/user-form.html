@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Save Employee</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Save user</h3>
+    <hr>
+
+    <p class="h4 mb-4">Save user</p>
+
+    <form action="#" th:action="@{/users/save}"
+          th:object="${userInsertDto}" method="post">
+
+        <input type="text" th:field="*{name}"
+               class="form-control mb-4 col-4" placeholder="Full name">
+
+        <input type="text" th:field="*{email}"
+               class="form-control mb-4 col-4" placeholder="Email">
+
+        <input type="text" th:field="*{password}"
+               class="form-control mb-4 col-4" placeholder="Password">
+
+        <input type="text" th:field="*{address.streetName}"
+               class="form-control mb-4 col-4" placeholder="Street name">
+
+        <input type="text" th:field="*{address.streetNumber}"
+               class="form-control mb-4 col-4" placeholder="Street number">
+
+        <input type="text" th:field="*{address.city}"
+               class="form-control mb-4 col-4" placeholder="City">
+
+        <input type="text" th:field="*{address.country}"
+               class="form-control mb-4 col-4" placeholder="Country">
+
+        <input type="text" th:field="*{address.zipCode}"
+               class="form-control mb-4 col-4" placeholder="Zip code">
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+
+    </form>
+
+    <hr>
+    <a th:href="@{/users/list}">Back to library users List</a>
+
+</div>
+</body>
+
+</html>
+
+
+
+
+

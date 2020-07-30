@@ -3,10 +3,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @ToString
@@ -39,6 +38,10 @@ public class Book {
     private int numOfPages;
     private int recommendedAge;
     private Genre genre;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="BOOK_ID")
+    private Set<BookReview> bookReviewSet;
 
     @Override
     public boolean equals(Object o) {
