@@ -23,7 +23,6 @@ public class UserController {
     public String listUsers(Model model) {
 
         List<UserEditDto> userList = userService.getAll();
-
         model.addAttribute("users", userList);
         return "users/list-users";
     }
@@ -43,9 +42,6 @@ public class UserController {
         model.addAttribute("userEditDto", userEditDto);
         return "users/update-form";
     }
-
-
-
 
     @PostMapping("/save")
     public String saveUser(@ModelAttribute ("userInsertDto") UserInsertDto userInsertDto) {
