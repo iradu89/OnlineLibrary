@@ -7,6 +7,7 @@ import scoalainformala.ro.OnlineLibrary.domain.BookReview;
 import scoalainformala.ro.OnlineLibrary.dto.BookDto;
 import scoalainformala.ro.OnlineLibrary.dto.BookReviewDto;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,5 +23,5 @@ public interface BookService {
     BookDto getBookByID(UUID id);
 
     @Transactional(rollbackFor = Exception.class)
-    UUID addReviewToBook(BookReviewDto bookReviewDto);
+    UUID addReviewToBook(@Valid BookReviewDto bookReviewDto);
 }
