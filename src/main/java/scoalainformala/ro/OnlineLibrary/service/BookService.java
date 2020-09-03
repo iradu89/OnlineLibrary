@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import scoalainformala.ro.OnlineLibrary.domain.Book;
 import scoalainformala.ro.OnlineLibrary.domain.BookReview;
 import scoalainformala.ro.OnlineLibrary.dto.BookDto;
+import scoalainformala.ro.OnlineLibrary.dto.BookReviewDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,5 +22,5 @@ public interface BookService {
     BookDto getBookByID(UUID id);
 
     @Transactional(rollbackFor = Exception.class)
-    UUID addReviewToBook(BookReview bookReview);
+    UUID addReviewToBook(BookReviewDto bookReviewDto);
 }

@@ -76,6 +76,7 @@ public class UserServiceImpl implements UserService {
 
         LibraryUser librUser = konverter.convertDto(userInsertDto);
         librUser.setUserRole(Role.CLIENT);
+        librUser.setActive(true);
         userRepository.save(librUser);
         return librUser;
     }
