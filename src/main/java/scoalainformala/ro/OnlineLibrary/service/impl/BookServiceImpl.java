@@ -1,6 +1,7 @@
 package scoalainformala.ro.OnlineLibrary.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import scoalainformala.ro.OnlineLibrary.domain.Book;
 import scoalainformala.ro.OnlineLibrary.domain.BookReview;
 import scoalainformala.ro.OnlineLibrary.dto.BookDto;
@@ -10,11 +11,13 @@ import scoalainformala.ro.OnlineLibrary.service.BookService;
 import scoalainformala.ro.OnlineLibrary.transformer.BookReviewTransformer;
 import scoalainformala.ro.OnlineLibrary.transformer.BookTransformer;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Validated
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookTransformer transformer;
@@ -45,7 +48,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public UUID addReviewToBook(BookReviewDto bookReviewDto) {
+    public UUID addReviewToBook(@Valid BookReviewDto bookReviewDto) {
         BookDto bookDtoToUpdate = getBookByID(bookReviewDto.getBookId());
 
         BookReview bookReview = reviewTransformer.transformBookReviewDtoToBookReview(bookReviewDto);
@@ -55,6 +58,4 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(bookToUpdate);
         return bookToUpdate.getId();
     }
-
-
 }
