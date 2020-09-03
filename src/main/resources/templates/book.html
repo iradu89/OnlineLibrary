@@ -10,10 +10,10 @@
 </div>
 <div>
     <form action='#' th:action="@{/addReview}" method='post'>
-        <input type="hidden" th:field="*{bookReview.id}" value="*{id}">
+        <input type="hidden" th:field="*{bookReviewDto.bookId}" value="*{bookId}">
 
-        <textarea name="content" rows="4" cols="50" th:field="*{bookReview.content}" placeholder="Write book review here"></textarea><br/>
-        Username: <input type="text" name="userName" th:field="*{bookReview.userName}"><br/>
+        <textarea name="content" rows="4" cols="50" th:field="*{bookReviewDto.content}" placeholder="Write book review here"></textarea><br/>
+        Username: <input type="text" name="userName" th:field="*{bookReviewDto.userName}"><br/>
         <input type='submit' value='Submit'/>
     </form>
     <br>
