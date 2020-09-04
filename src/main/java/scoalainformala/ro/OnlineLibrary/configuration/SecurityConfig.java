@@ -30,6 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/users/list").hasAuthority("ADMIN")
                 .antMatchers("/users/showFormForAdd").hasAnyAuthority("ADMIN", "CLIENT")
+                .antMatchers("/addReview").hasAnyAuthority("ADMIN", "CLIENT")
+                .antMatchers("/buyBook").hasAnyAuthority("ADMIN", "CLIENT")
+                .antMatchers("/confirmPurchase").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers("/").permitAll()
                 .and().formLogin();
     }

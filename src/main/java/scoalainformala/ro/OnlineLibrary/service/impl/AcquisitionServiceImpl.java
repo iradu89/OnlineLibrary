@@ -1,0 +1,34 @@
+package scoalainformala.ro.OnlineLibrary.service.impl;
+
+import org.springframework.stereotype.Service;
+import scoalainformala.ro.OnlineLibrary.domain.Acquisition;
+import scoalainformala.ro.OnlineLibrary.domain.Book;
+import scoalainformala.ro.OnlineLibrary.domain.LibraryUser;
+import scoalainformala.ro.OnlineLibrary.dto.AcquisitionDto;
+import scoalainformala.ro.OnlineLibrary.repository.AcquisitionRepository;
+import scoalainformala.ro.OnlineLibrary.repository.BookRepository;
+import scoalainformala.ro.OnlineLibrary.repository.UserRepository;
+import scoalainformala.ro.OnlineLibrary.service.AcquisitionService;
+
+import java.time.LocalDateTime;
+
+@Service
+public class AcquisitionServiceImpl implements AcquisitionService {
+    private final AcquisitionRepository acquisitionRepository;
+    private final UserRepository userRepository;
+    private final BookRepository bookRepository;
+
+    public AcquisitionServiceImpl(AcquisitionRepository acquisitionRepository, UserRepository userRepository, BookRepository bookRepository) {
+        this.acquisitionRepository = acquisitionRepository;
+        this.userRepository = userRepository;
+        this.bookRepository = bookRepository;
+    }
+
+    @Override
+    public Acquisition add(AcquisitionDto acquisitionDto) {
+        LibraryUser libUser = userRepository.findByEmail(acquisitionDto.getLibUserEmail());
+        Book book = bookRepository.findById(acquisitionDto.getBookId()).orElseThrow();
+        Acquisition acquisition = new Acquisition(book, libUser, LocalDateTime.now());
+        return acquisitionRepository.save(acquisition);
+    }
+}
