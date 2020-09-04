@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy Book</title>
+</head>
+<body>
+<p th:text="${libraryUser}"></p>
+<p th:text="${bookDto}"></p>
+<br>
+<br>
+<br>
+<p>Please confirm your purchase</p>
+<form action='#' th:action="@{/confirmPurchase}" th:object="${acquisitionDto}" method='post'>
+    <input type="hidden" th:value="${bookDto.id}" name="bookId">
+    <input type="hidden" th:value="${libraryUser.email}" name="libUserEmail">
+    <input type='submit' value='Buy'/>
+</form>
+</body>
+</html>
