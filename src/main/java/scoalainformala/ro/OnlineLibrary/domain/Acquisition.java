@@ -1,11 +1,24 @@
 package scoalainformala.ro.OnlineLibrary.domain;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@ToString
 public class Acquisition {
+    public Acquisition(Book book, LibraryUser libraryUser, @NotNull LocalDateTime dateTime) {
+        this.book = book;
+        this.libraryUser = libraryUser;
+        this.dateTime = dateTime;
+    }
+
     @Id
     @GeneratedValue(generator="system-uuid")
     private UUID id;

@@ -3,6 +3,7 @@ package scoalainformala.ro.OnlineLibrary.domain;
 import java.util.Random;
 
 public enum Genre {
+    AUTOBIOGRAPHY,
     FANTASY,
     MYSTERY,
     FAMILY,

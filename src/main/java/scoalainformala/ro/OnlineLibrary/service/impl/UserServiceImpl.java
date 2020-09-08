@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import scoalainformala.ro.OnlineLibrary.domain.LibraryUser;
+import scoalainformala.ro.OnlineLibrary.domain.Role;
 import scoalainformala.ro.OnlineLibrary.dto.UserEditDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserInsertDto;
 import scoalainformala.ro.OnlineLibrary.exceptions.InvalidUserException;
@@ -74,7 +75,8 @@ public class UserServiceImpl implements UserService {
     public LibraryUser saveNewUser(UserInsertDto userInsertDto) {
 
         LibraryUser librUser = konverter.convertDto(userInsertDto);
-        log.info(librUser.getName());
+        librUser.setUserRole(Role.CLIENT);
+        librUser.setActive(true);
         userRepository.save(librUser);
         return librUser;
     }

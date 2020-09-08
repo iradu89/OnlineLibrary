@@ -1,28 +1,54 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Book</title>
+    <style>
+        .alert {color:red}
+    </style>
 </head>
 <body>
 <div>
     <p th:text="${bookDto}"></p>
 </div>
 <div>
+    <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
     <form action='#' th:action="@{/addReview}" method='post'>
-        <input type="hidden" th:field="*{bookReview.id}" value="*{id}">
-
-        <textarea name="content" rows="4" cols="50" th:field="*{bookReview.content}" placeholder="Write book review here"></textarea><br/>
-        Username: <input type="text" name="userName" th:field="*{bookReview.userName}"><br/>
-        <input type='submit' value='Submit'/>
+        <table>
+            <input type="hidden" th:field="*{bookReviewDto.bookId}" value="*{bookId}">
+            <tr>
+                <td>
+                    <textarea name="content" rows="4" cols="50" th:field="*{bookReviewDto.content}"
+                              placeholder="Write book review here (*)"></textarea><br/>
+                </td>
+                <td th:if="${#fields.hasErrors('bookReviewDto.content')}" th:errors="*{bookReviewDto.content}" class="alert">Review Content Error</td>
+            </tr>
+            <tr>
+                <td>
+                    Name (*): <input type="text" name="userName" th:field="*{bookReviewDto.userName}">
+                </td>
+                <td th:if="${#fields.hasErrors('bookReviewDto.userName')}" th:errors="*{bookReviewDto.userName}" class="alert">Review Username Error</td>
+            </tr>
+            <br/>
+            <tr>
+                <td>
+                <input type='submit' value='Submit'/>
+                </td>
+            </tr>
+        </table>
     </form>
     <br>
-
+    <br>
+    <br>
+    <form action='#' th:action="@{/buyBook}" method='get'>
+        <input type="hidden" th:field="*{bookDto.id}" value="*{id}">
+        <input type='submit' value='Buy'/>
+    </form>
     <table>
-    <tr th:each="review : ${bookDto.bookReviewSet}">
-        <td th:text="${review.userName}">Username</td>
-        <td th:text="${review.content}">Content</td>
-    </tr>
+        <tr th:each="review : ${bookDto.bookReviewSet}">
+            <td th:text="${review.userName}">Username</td>
+            <td th:text="${review.content}">Content</td>
+        </tr>
     </table>
 </div>
 </body>
