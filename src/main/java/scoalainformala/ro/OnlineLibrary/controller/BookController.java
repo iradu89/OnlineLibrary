@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import scoalainformala.ro.OnlineLibrary.domain.Genre;
 import scoalainformala.ro.OnlineLibrary.dto.AcquisitionDto;
 import scoalainformala.ro.OnlineLibrary.dto.BookDto;
 import scoalainformala.ro.OnlineLibrary.dto.BookReviewDto;
@@ -42,7 +44,7 @@ public class BookController {
         model.addAttribute("bookId", bookId);
         model.addAttribute("bookDto", bookDto);
         model.addAttribute("bookReviewDto", bookReviewDto);
-        return "book";
+        return "books/book";
     }
 
     @RequestMapping(value = "/addReview", method = POST)
@@ -54,17 +56,17 @@ public class BookController {
             model.addAttribute("bookDto", bookDto);
             model.addAttribute("bookReviewDto", bookReviewDto);
             log.info(bindingResult);
-            return "book";
+            return "books/book";
         }
         log.info(bookReviewDto);
         UUID id = bookService.addReviewToBook(bookReviewDto);
-        return "redirect:/book/" + id;
+        return "redirect:/books/book/" + id;
     }
 
     @RequestMapping(value = "/buyBook", method = GET)
     public String buyBook(Model model,
                           @ModelAttribute(value = "bookDto") BookDto bookDto,
-                          UserEditDto libraryUser,
+                           UserEditDto libraryUser,
                           AcquisitionDto acquisitionDto) {
         Authentication loggedUser = SecurityContextHolder.getContext().getAuthentication();
         libraryUser = userService.showUser(loggedUser.getName());
@@ -72,7 +74,7 @@ public class BookController {
         bookDto = bookService.getBookByID(bookDto.getId());
         model.addAttribute("bookDto", bookDto);
         model.addAttribute(acquisitionDto);
-        return "buyBookForm";
+        return "books/buyBookForm";
     }
 
     @RequestMapping(value = "confirmPurchase", method = POST)
@@ -80,5 +82,38 @@ public class BookController {
         log.info(acquisitionDto);
         log.info(acquisitionService.add(acquisitionDto));
         return "redirect:/book/" + acquisitionDto.getBookId();
+    }
+
+    @RequestMapping(value = "/listBooks", method = GET)
+    public String listBooks(Model model) {
+        model.addAttribute("books", bookService.getAllForFrontEnd());
+        return "books/list-books";
+    }
+
+    @RequestMapping(value = "/showFormForAddBook", method = GET)
+    public String showBookForm(Model model) {
+        model.addAttribute("bookDto", new BookDto());
+        model.addAttribute("genreList", Genre.values());
+        return "books/book-form";
+    }
+
+    @RequestMapping(value = "/addBook", method = POST)
+    public String addBook(@ModelAttribute("bookDto") BookDto bookDto) {
+        bookService.add(bookDto);
+        return "redirect:/books/listBooks";
+    }
+
+    @RequestMapping(value = "/showFormForUpdateBook", method = GET)
+    public String showBookFormForUpdate(@RequestParam("bookId") UUID bookId, Model model) {
+        BookDto bookDto = bookService.getBookByID(bookId);
+        model.addAttribute("bookDto", bookDto);
+        model.addAttribute("genreList", Genre.values());
+        return "books/book-form";
+    }
+
+    @RequestMapping(value = "/deleteBook", method = GET)
+    public String deleteBook(@RequestParam("bookId") UUID bookId) {
+        bookService.deleteById(bookId);
+        return "redirect:/books/listBooks";
     }
 }

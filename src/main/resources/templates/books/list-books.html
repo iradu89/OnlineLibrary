@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Books list</title>
+</head>
+<body>
+<div class="container">
+    <h3>Books list</h3>
+    <hr>
+
+    <a th:href="@{/showFormForAddBook}" class="btn btn-primary btn-sm mb-3">
+        Add Book
+    </a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Language</th>
+            <th>Quantity</th>
+            <th>Number of pages</th>
+            <th>Recommended age</th>
+            <th>Genre</th>
+            <th>ACTION          </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.price}"></td>
+            <td th:text="${book.language}"></td>
+            <td th:text="${book.quantity}"></td>
+            <td th:text="${book.numOfPages}"></td>
+            <td th:text="${book.recommendedAge}"></td>
+            <td th:text="${book.genre}"></td>
+
+            <td>
+                <!--Update button/link-->
+                <a th:href="@{/showFormForUpdateBook(bookId=${book.id})}"
+                   class="btn btn-info btn-sm">
+                    Update
+                </a>
+
+                <!--Delete button/link-->
+                <a th:href="@{/deleteBook(bookId=${book.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if (!(confirm('Are you sure you want to delete this book?'))) return false">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
