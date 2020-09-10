@@ -60,7 +60,7 @@ public class BookController {
         }
         log.info(bookReviewDto);
         UUID id = bookService.addReviewToBook(bookReviewDto);
-        return "redirect:/books/book/" + id;
+        return "redirect:/book/" + id;
     }
 
     @RequestMapping(value = "/buyBook", method = GET)
@@ -100,7 +100,7 @@ public class BookController {
     @RequestMapping(value = "/addBook", method = POST)
     public String addBook(@ModelAttribute("bookDto") BookDto bookDto) {
         bookService.add(bookDto);
-        return "redirect:/books/listBooks";
+        return "redirect:/listBooks";
     }
 
     @RequestMapping(value = "/showFormForUpdateBook", method = GET)
@@ -114,6 +114,6 @@ public class BookController {
     @RequestMapping(value = "/deleteBook", method = GET)
     public String deleteBook(@RequestParam("bookId") UUID bookId) {
         bookService.deleteById(bookId);
-        return "redirect:/books/listBooks";
+        return "redirect:/listBooks";
     }
 }
