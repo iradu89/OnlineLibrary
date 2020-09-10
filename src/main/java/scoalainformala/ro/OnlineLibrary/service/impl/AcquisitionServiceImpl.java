@@ -5,6 +5,7 @@ import scoalainformala.ro.OnlineLibrary.domain.Acquisition;
 import scoalainformala.ro.OnlineLibrary.domain.Book;
 import scoalainformala.ro.OnlineLibrary.domain.LibraryUser;
 import scoalainformala.ro.OnlineLibrary.dto.AcquisitionDto;
+import scoalainformala.ro.OnlineLibrary.exceptions.NotEnoughProductsInStockException;
 import scoalainformala.ro.OnlineLibrary.repository.AcquisitionRepository;
 import scoalainformala.ro.OnlineLibrary.repository.BookRepository;
 import scoalainformala.ro.OnlineLibrary.repository.UserRepository;
@@ -25,9 +26,13 @@ public class AcquisitionServiceImpl implements AcquisitionService {
     }
 
     @Override
-    public Acquisition add(AcquisitionDto acquisitionDto) {
+    public Acquisition add(AcquisitionDto acquisitionDto) throws NotEnoughProductsInStockException {
         LibraryUser libUser = userRepository.findByEmail(acquisitionDto.getLibUserEmail());
         Book book = bookRepository.findById(acquisitionDto.getBookId()).orElseThrow();
+        if (book.getQuantity() - acquisitionDto.getQuantity() > 0) {
+            book.setQuantity(book.getQuantity() - acquisitionDto.getQuantity());
+            bookRepository.save(book);
+        } else throw new NotEnoughProductsInStockException(book);
         Acquisition acquisition = new Acquisition(book, libUser, LocalDateTime.now());
         return acquisitionRepository.save(acquisition);
     }
