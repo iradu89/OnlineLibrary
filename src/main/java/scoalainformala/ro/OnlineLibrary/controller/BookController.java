@@ -1,5 +1,6 @@
 package scoalainformala.ro.OnlineLibrary.controller;
 
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -77,6 +78,7 @@ public class BookController {
         return "books/buyBookForm";
     }
 
+    @SneakyThrows
     @RequestMapping(value = "confirmPurchase", method = POST)
     public String confirmPurchase(@ModelAttribute(value ="acquisitionDto") AcquisitionDto acquisitionDto, Model model) {
         log.info(acquisitionDto);
