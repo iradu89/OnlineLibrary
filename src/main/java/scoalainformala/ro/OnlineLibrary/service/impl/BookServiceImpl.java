@@ -29,15 +29,36 @@ public class BookServiceImpl implements BookService {
         this.reviewTransformer = reviewTransformer;
     }
 
+    //Used for Backend
     @Override
     public void add(Book book) {
         bookRepository.save(book);
+    }
+
+    //Used for Frontend
+    @Override
+    public BookDto add(BookDto bookdto) {
+        return transformer.transformBookToBookDto(bookRepository.save(transformer.transformBookDtoToBook(bookdto)));
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        bookRepository.deleteById(id);
     }
 
     @Override
     public List<Book> getAllForBackend() {
         List<Book> books = new ArrayList<>();
         bookRepository.findAll().forEach(books::add);
+        return books;
+    }
+
+    @Override
+    public List<BookDto> getAllForFrontEnd() {
+        List<BookDto> books = new ArrayList<>();
+        bookRepository.findAll().forEach(book -> {
+            books.add(transformer.transformBookToBookDto(book));
+        });
         return books;
     }
 

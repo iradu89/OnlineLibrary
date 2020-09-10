@@ -16,8 +16,17 @@ public interface BookService {
     @Transactional(rollbackFor = Exception.class)
     void add(Book book);
 
+    @Transactional(rollbackFor = Exception.class)
+    BookDto add(BookDto bookdto);
+
+    @Transactional(rollbackFor = Exception.class)
+    void deleteById(UUID id);
+
     @Transactional (readOnly = true)
     List<Book> getAllForBackend();
+
+    @Transactional (readOnly = true)
+    List<BookDto> getAllForFrontEnd();
 
     @Transactional(rollbackFor = Exception.class)
     BookDto getBookByID(UUID id);
