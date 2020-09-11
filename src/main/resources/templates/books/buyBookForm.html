@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Buy Confirmation</title>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron p-3 mb-2 bg-light text-dark">
+        <p class="lead">Please confirm your Name & Address</p>
+        <div class="container">
+            <div class="row">
+                <div class="col">Name: <a th:text="${libraryUser.name}"></a></div>
+                <div class="col">Address: <a th:text="${libraryUser.address}"></a></div>
+            </div>
+            <br>
+            <p>If you wish to change the address click <a
+                    th:href="@{/users/showUpdateForm(email=${libraryUser.email})}">HERE</a></p>
+        </div>
+        <hr class="my-4">
+        <p class="lead">Please confirm your Purchase</p>
+        <div class="container">
+            <div class="row">
+                <div class="col">Title: <a th:text="${bookDto.title}"></a></div>
+                <div class="col">By: <a th:text="${bookDto.author}"></a></div>
+            </div>
+        </div>
+        <hr class="my-4">
+        <form action='#' th:action="@{/confirmPurchase}" th:object="${acquisitionDto}" method='post'>
+            <input type="hidden" th:value="${bookDto.id}" name="bookId">
+            <input type="hidden" th:value="${libraryUser.email}" name="libUserEmail">
+            <div class="form-row align-items-center text-center">
+                <p>Quantity: </p>
+                <div class="col-auto">
+                    <label class="sr-only" for="inlineFormInput">Quantity</label>
+                    <input type="number" class="form-control mb-2" id="inlineFormInput" placeholder="1"
+                            th:field="*{quantity}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-2">Buy</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

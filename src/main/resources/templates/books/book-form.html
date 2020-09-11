@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Save Book</title>
+</head>
+<body>
+<div class ="container">
+    <h3>Book Directory</h3>
+    <hr>
+
+    <p class ="h4 mb-4">Add Book</p>
+    <form action="#" th:action="@{/addBook}" th:object="${bookDto}" method="POST">
+        <input type="hidden" th:field="*{id}">
+        <input type="text" th:field="*{author}" class ="form-control mb-4 col-4" placeholder="Author">
+        <input type="text" th:field="*{title}" class ="form-control mb-4 col-4" placeholder="Title">
+        <p>Price:</p>
+        <input type="number" th:field="*{price}" class ="form-control mb-4 col-4">
+        <input type="text" th:field="*{language}" class ="form-control mb-4 col-4" placeholder="Language">
+        <p>Quantity:</p>
+        <input type="number" th:field="*{quantity}" class ="form-control mb-4 col-4">
+        <p>Number of Pages:</p>
+        <input type="number" th:field="*{numOfPages}" class ="form-control mb-4 col-4">
+        <p>Recommended Age:</p>
+        <input type="number" th:field="*{recommendedAge}" class ="form-control mb-4 col-4">
+        <p>Genre:</p>
+        <select th:field="*{genre}" class ="form-control mb-4 col-4">
+            <option th:each="gen : ${genreList}" th:value="${gen}" th:text="${gen}">
+            </option>
+        </select>
+        <button type="submit" class ="btn btn-info col-2">Save</button>
+    </form>
+    <hr>
+    <a th:href="@{/listBooks}">Back to Books List</a>
+</div>
+</body>
+</html>

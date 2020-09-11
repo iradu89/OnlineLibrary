@@ -12,4 +12,5 @@ import java.util.UUID;
 public class AcquisitionDto {
     private UUID bookId;
     private String libUserEmail;
+    private int quantity;
 }

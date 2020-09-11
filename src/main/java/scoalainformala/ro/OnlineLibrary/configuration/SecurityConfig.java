@@ -28,8 +28,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                //Admin
                 .antMatchers("/users/list").hasAuthority("ADMIN")
-                .antMatchers("/users/showFormForAdd").hasAnyAuthority("ADMIN", "CLIENT")
+//                .antMatchers("/users/showFormForAdd").hasAnyAuthority("ADMIN", "CLIENT") //probably has to be deleted
+                //Book_keeper
+                .antMatchers("/listBooks").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
+                .antMatchers("/showFormForAddBook").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
+                .antMatchers("/addBook").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
+                .antMatchers("/deleteBook").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
+                .antMatchers("/showFormForUpdateBook").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
+                //Client
                 .antMatchers("/addReview").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers("/buyBook").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers("/confirmPurchase").hasAnyAuthority("ADMIN", "CLIENT")
