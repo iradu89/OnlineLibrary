@@ -66,8 +66,7 @@ public class BookController {
 
     @RequestMapping(value = "/buyBook", method = GET)
     public String buyBook(Model model,
-                          @ModelAttribute(value = "bookDto") BookDto bookDto,
-                           UserEditDto libraryUser,
+                          @ModelAttribute(value = "bookDto") BookDto bookDto, UserEditDto libraryUser,
                           AcquisitionDto acquisitionDto) {
         Authentication loggedUser = SecurityContextHolder.getContext().getAuthentication();
         libraryUser = userService.showUser(loggedUser.getName());
