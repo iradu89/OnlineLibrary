@@ -1,5 +1,7 @@
 package scoalainformala.ro.OnlineLibrary.service.impl;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import scoalainformala.ro.OnlineLibrary.domain.Book;
@@ -8,6 +10,7 @@ import scoalainformala.ro.OnlineLibrary.dto.BookDto;
 import scoalainformala.ro.OnlineLibrary.dto.BookReviewDto;
 import scoalainformala.ro.OnlineLibrary.repository.BookRepository;
 import scoalainformala.ro.OnlineLibrary.service.BookService;
+import scoalainformala.ro.OnlineLibrary.service.UserService;
 import scoalainformala.ro.OnlineLibrary.transformer.BookReviewTransformer;
 import scoalainformala.ro.OnlineLibrary.transformer.BookTransformer;
 
@@ -22,11 +25,13 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookTransformer transformer;
     private final BookReviewTransformer reviewTransformer;
+    private final UserService userService;
 
-    public BookServiceImpl(BookRepository bookRepository, BookTransformer transformer, BookReviewTransformer reviewTransformer) {
+    public BookServiceImpl(BookRepository bookRepository, BookTransformer transformer, BookReviewTransformer reviewTransformer, UserService userService) {
         this.bookRepository = bookRepository;
         this.transformer = transformer;
         this.reviewTransformer = reviewTransformer;
+        this.userService = userService;
     }
 
     //Used for Backend
@@ -73,6 +78,10 @@ public class BookServiceImpl implements BookService {
         BookDto bookDtoToUpdate = getBookByID(bookReviewDto.getBookId());
 
         BookReview bookReview = reviewTransformer.transformBookReviewDtoToBookReview(bookReviewDto);
+
+        Authentication loggedUser = SecurityContextHolder.getContext().getAuthentication();
+        bookReview.setUserName(userService.showUser(loggedUser.getName()).getName());
+
         bookDtoToUpdate.getBookReviewSet().add(bookReview);
 
         Book bookToUpdate = transformer.transformBookDtoToBook(bookDtoToUpdate);

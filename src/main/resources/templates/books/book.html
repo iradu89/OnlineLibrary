@@ -1,55 +1,85 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Book</title>
     <style>
         .alert {color:red}
+
+<!--    <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>-->
     </style>
 </head>
 <body>
-<div>
-    <p th:text="${bookDto}"></p>
-</div>
-<div>
-    <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
-    <form action='#' th:action="@{/addReview}" method='post'>
-        <table>
-            <input type="hidden" th:field="*{bookReviewDto.bookId}" value="*{bookId}">
+<div class="container">
+    <div class="jumbotron p-3 mb-2 bg-light text-dark">
+        <blockquote class="blockquote text-center">
+            <p class="display-4"><a th:text="${bookDto.title}"></a></p>
+            <footer class="blockquote-footer">By <cite><a th:text="${bookDto.author}"></a></cite></footer>
+        </blockquote>
+        <hr class="my-4">
+        <div class="container">
+            <div class="row">
+                <div class="col">Language: <a th:text="${bookDto.language}"></a></div>
+                <div class="col">Number Of Pages: <a th:text="${bookDto.numOfPages}"></a></div>
+                <div class="w-100"></div>
+                <div class="col">Genre: <a th:text="${bookDto.genre}"></a></div>
+                <div class="col">Recommended Age: <a th:text="${bookDto.recommendedAge}"></a></div>
+                <div class="w-100"></div>
+                <div class="col">Price: <a th:text="${bookDto.price}"></a> RON</div>
+                <div class="col">In stock: <a th:text="${bookDto.quantity}"></a> pcs.</div>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="col-md-12 text-center">
+            <form action='#' th:action="@{/buyBook}" method='get'>
+                <input type="hidden" th:field="*{bookDto.id}" value="*{id}">
+                <input type="submit" class="btn btn-primary" value='Buy'/>
+            </form>
+        </div>
+        <hr class="my-4">
+        <p class="lead">User Reviews: </p>
+        <table class="table table-borderless">
             <tr>
-                <td>
-                    <textarea name="content" rows="4" cols="50" th:field="*{bookReviewDto.content}"
-                              placeholder="Write book review here (*)"></textarea><br/>
-                </td>
-                <td th:if="${#fields.hasErrors('bookReviewDto.content')}" th:errors="*{bookReviewDto.content}" class="alert">Review Content Error</td>
+                <th scope="col">Username</th>
+                <th scope="col">Review</th>
             </tr>
-            <tr>
-                <td>
-                    Name (*): <input type="text" name="userName" th:field="*{bookReviewDto.userName}">
-                </td>
-                <td th:if="${#fields.hasErrors('bookReviewDto.userName')}" th:errors="*{bookReviewDto.userName}" class="alert">Review Username Error</td>
-            </tr>
-            <br/>
-            <tr>
-                <td>
-                <input type='submit' value='Submit'/>
-                </td>
+            <tr th:each="review : ${bookDto.bookReviewSet}">
+                <td th:text="${review.userName}">Username</td>
+                <td th:text="${review.content}">Content</td>
             </tr>
         </table>
-    </form>
-    <br>
-    <br>
-    <br>
-    <form action='#' th:action="@{/buyBook}" method='get'>
-        <input type="hidden" th:field="*{bookDto.id}" value="*{id}">
-        <input type='submit' value='Buy'/>
-    </form>
-    <table>
-        <tr th:each="review : ${bookDto.bookReviewSet}">
-            <td th:text="${review.userName}">Username</td>
-            <td th:text="${review.content}">Content</td>
-        </tr>
-    </table>
+        <div>
+            <form action='#' th:action="@{/addReview}" method='post'>
+                <table class="table table-borderless">
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{bookReviewDto.bookId}" value="*{bookId}">
+                        <tr>
+                            <td>
+                    <textarea class="form-control" rows="3" th:field="*{bookReviewDto.content}"
+                              placeholder="You can write book review here. Note that you have to be logged in to do so (*)"></textarea><br/>
+                            </td>
+                            <td th:if="${#fields.hasErrors('bookReviewDto.content')}"
+                                th:errors="*{bookReviewDto.content}"
+                                class="alert">Review Content Error
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="submit" class="btn btn-primary" value='Submit Review'/>
+                            </td>
+                        </tr>
+                    </div>
+                </table>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>
