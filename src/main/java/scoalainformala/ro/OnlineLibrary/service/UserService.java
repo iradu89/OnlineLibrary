@@ -18,7 +18,7 @@ public interface UserService {
 
     public UserEditDto showUser(String email);
 
-    public LibraryUser saveNewUser(UserInsertDto userInsertDto);
+    public LibraryUser saveNewUser(UserInsertDto userInsertDto) throws InvalidUserException;
 
     public UserEditDto saveUserEdit(UserEditDto userEditDto);
 

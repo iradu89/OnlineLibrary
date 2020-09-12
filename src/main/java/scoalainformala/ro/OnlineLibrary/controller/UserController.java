@@ -1,5 +1,6 @@
 package scoalainformala.ro.OnlineLibrary.controller;
 
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,12 +44,14 @@ public class UserController {
         return "users/update-form";
     }
 
+    @SneakyThrows
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute ("userInsertDto") UserInsertDto userInsertDto) {
-        System.out.println(userInsertDto);
-        userService.saveNewUser(userInsertDto);
+    public String saveUser(@ModelAttribute ("userInsertDto") UserInsertDto userInsertDto, Model model) {
 
-        return "redirect:/users/list";
+        userService.saveNewUser(userInsertDto);
+        model.addAttribute("username", userInsertDto.getEmail());
+
+        return "users/register-success";
     }
 
     @PostMapping("/update")

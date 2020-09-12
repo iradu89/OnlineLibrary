@@ -10,11 +10,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
+@ToString
 
 public class UserInsertDto {
 
@@ -24,7 +29,13 @@ public class UserInsertDto {
     @Email
     private String email;
 
+    /**
+     * Password must have 1 digit, 1 uppercase, 1 lowercase,
+     * 1 special character (@#$%^&+=), no whitespaces, 8-20 characters
+     */
     @NotBlank
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$", message = "Min. 1 digit, 1 uppercase, 1 lowercase, 8-20 characters")
+    @Size(min = 8, max = 20, message = "The password must be 8-20 characters long.")
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)

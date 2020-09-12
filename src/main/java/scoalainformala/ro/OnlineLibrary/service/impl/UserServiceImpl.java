@@ -72,10 +72,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LibraryUser saveNewUser(UserInsertDto userInsertDto) {
+    public LibraryUser saveNewUser(UserInsertDto userInsertDto) throws InvalidUserException {
 
+        String email = userInsertDto.getEmail();
+        if(userRepository.existsByEmail(email)) {
+            throw new InvalidUserException("Username already registered in database.");
+        }
         LibraryUser librUser = konverter.convertDto(userInsertDto);
-        librUser.setUserRole(Role.BOOK_KEEPER);
+        librUser.setUserRole(Role.ADMIN);
         librUser.setActive(true);
         userRepository.save(librUser);
         return librUser;

@@ -10,34 +10,27 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Qualifier("myUserDetailsService")
+
     @Autowired
     UserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService)
+        .passwordEncoder(encoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                //Admin
                 .antMatchers("/users/list").hasAuthority("ADMIN")
-//                .antMatchers("/users/showFormForAdd").hasAnyAuthority("ADMIN", "CLIENT") //probably has to be deleted
-                //Book_keeper
-                .antMatchers("/listBooks").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
-                .antMatchers("/showFormForAddBook").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
-                .antMatchers("/addBook").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
-                .antMatchers("/deleteBook").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
-                .antMatchers("/showFormForUpdateBook").hasAnyAuthority("ADMIN", "BOOK_KEEPER")
-                //Client
                 .antMatchers("/addReview").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers("/buyBook").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers("/confirmPurchase").hasAnyAuthority("ADMIN", "CLIENT")
@@ -46,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder(10);
     }
 }
