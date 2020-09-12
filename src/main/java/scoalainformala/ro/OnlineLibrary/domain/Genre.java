@@ -12,6 +12,7 @@ public enum Genre {
     ROMANCE,
     HISTORICAL,
     SELF_IMPROVEMENT,
+    SEXOLOGY,
     MAGIC,
     GENERAL,
     MANUAL,
