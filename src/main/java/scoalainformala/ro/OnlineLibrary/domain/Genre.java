@@ -8,6 +8,7 @@ public enum Genre {
     MYSTERY,
     FAMILY,
     ADVENTURE,
+    SEXOLOGY,
     COMING_OF_AGE,
     ROMANCE,
     HISTORICAL,

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import scoalainformala.ro.OnlineLibrary.domain.Address;
+import scoalainformala.ro.OnlineLibrary.validation.ValidPassword;
 
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
@@ -24,7 +25,12 @@ public class UserInsertDto {
     @Email
     private String email;
 
+    /**
+     * Password must have 1 digit, 1 uppercase, 1 lowercase,
+     * 1 special character (@#$%^&+=), no whitespaces, 8-20 characters
+     */
     @NotBlank
+    @ValidPassword
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)

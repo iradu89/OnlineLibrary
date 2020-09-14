@@ -1,12 +1,15 @@
 package scoalainformala.ro.OnlineLibrary.controller;
 
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import scoalainformala.ro.OnlineLibrary.dto.UserEditDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserInsertDto;
 import scoalainformala.ro.OnlineLibrary.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -43,12 +46,17 @@ public class UserController {
         return "users/update-form";
     }
 
+    @SneakyThrows
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute ("userInsertDto") UserInsertDto userInsertDto) {
+    public String saveUser(@Valid @ModelAttribute("userInsertDto") UserInsertDto userInsertDto, Model model, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "users/user-form";
+        }
         System.out.println(userInsertDto);
         userService.saveNewUser(userInsertDto);
+        model.addAttribute("username", userInsertDto.getEmail());
 
-        return "redirect:/users/list";
+        return "users/register-success";
     }
 
     @PostMapping("/update")

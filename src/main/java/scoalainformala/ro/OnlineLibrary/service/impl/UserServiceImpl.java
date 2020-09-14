@@ -1,7 +1,9 @@
 package scoalainformala.ro.OnlineLibrary.service.impl;
 
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import scoalainformala.ro.OnlineLibrary.domain.LibraryUser;
 import scoalainformala.ro.OnlineLibrary.domain.Role;
@@ -21,7 +23,8 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -31,8 +34,8 @@ public class UserServiceImpl implements UserService {
     private EntityVsInsert konverter;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
 
@@ -42,8 +45,8 @@ public class UserServiceImpl implements UserService {
         List<LibraryUser> libList = findAll();
 
         for (LibraryUser lib : libList) {
-        UserEditDto conv = converter.convertEntity(lib);
-        finalList.add(conv);
+            UserEditDto conv = converter.convertEntity(lib);
+            finalList.add(conv);
         }
         return finalList;
     }
@@ -65,17 +68,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEditDto showUser(String email) {
 
-        UserEditDto servedDto = new UserEditDto();
+        UserEditDto servedDto;
         LibraryUser libUser = userRepository.findByEmail(email);
         servedDto = converter.convertEntity(libUser);
         return servedDto;
     }
 
+    @SneakyThrows
     @Override
     public LibraryUser saveNewUser(UserInsertDto userInsertDto) {
-
+        LibraryUser existingUser = userRepository.findByEmail(userInsertDto.getEmail());
+        if (existingUser != null) {
+            throw new InvalidUserException("User already in database!");
+        }
         LibraryUser librUser = konverter.convertDto(userInsertDto);
-        librUser.setUserRole(Role.BOOK_KEEPER);
+        librUser.setPassword(passwordEncoder.encode(librUser.getPassword()));
+        librUser.setUserRole(Role.CLIENT);
         librUser.setActive(true);
         userRepository.save(librUser);
         return librUser;

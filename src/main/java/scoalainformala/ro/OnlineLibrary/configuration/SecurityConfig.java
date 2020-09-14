@@ -12,18 +12,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import scoalainformala.ro.OnlineLibrary.security.UserDetailsServiceImpl;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("myUserDetailsService")
+    @Qualifier("userDetailsServiceImpl")
     @Autowired
-    UserDetailsService userDetailsService;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-    }
+    UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -42,11 +38,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/buyBook").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers("/confirmPurchase").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers("/").permitAll()
-                .and().formLogin();
+                .and().formLogin()
+                .loginPage("/login").permitAll();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
