@@ -1,24 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <div th:replace="/fragments/navbar :: header"/>
     <title>Books list</title>
 </head>
 <body>
 <div class="container">
+    <div th:replace="/fragments/navbar :: navbar"/>
     <h3>Books list</h3>
     <hr>
 
     <a th:href="@{/showFormForAddBook}" class="btn btn-primary btn-sm mb-3">
         Add Book
     </a>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" id="table" data-toggle="table">
         <thead class="thead-dark">
         <tr>
             <th>Author</th>
@@ -29,7 +25,7 @@
             <th>Number of pages</th>
             <th>Recommended age</th>
             <th>Genre</th>
-            <th>ACTION          </th>
+            <th>ACTION</th>
         </tr>
         </thead>
 
@@ -63,4 +59,11 @@
     </table>
 </div>
 </body>
+<script>
+    $(document).ready(function () {
+$('#bookTable').DataTable();
+$('.dataTables_length').addClass('bs-select');
+});
+
+</script>
 </html>
