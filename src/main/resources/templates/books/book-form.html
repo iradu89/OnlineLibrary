@@ -14,20 +14,32 @@
 <div class ="container">
     <h3>Book Directory</h3>
     <hr>
-
     <p class ="h4 mb-4">Add Book</p>
     <form action="#" th:action="@{/addBook}" th:object="${bookDto}" method="POST">
         <input type="hidden" th:field="*{id}">
+        <p th:if="${#fields.hasErrors('author')}" class="alert alert-danger" th:errors="*{author}"></p>
         <input type="text" th:field="*{author}" class ="form-control mb-4 col-4" placeholder="Author">
+
+        <p th:if="${#fields.hasErrors('title')}" class="alert alert-danger" th:errors="*{title}"></p>
         <input type="text" th:field="*{title}" class ="form-control mb-4 col-4" placeholder="Title">
+
         <p>Price:</p>
+        <p th:if="${#fields.hasErrors('price')}" class="alert alert-danger" th:errors="*{price}"></p>
         <input type="number" th:field="*{price}" class ="form-control mb-4 col-4">
+
+        <p th:if="${#fields.hasErrors('language')}" class="alert alert-danger" th:errors="*{language}"></p>
         <input type="text" th:field="*{language}" class ="form-control mb-4 col-4" placeholder="Language">
+
         <p>Quantity:</p>
+        <p th:if="${#fields.hasErrors('quantity')}" class="alert alert-danger" th:errors="*{quantity}"></p>
         <input type="number" th:field="*{quantity}" class ="form-control mb-4 col-4">
+
         <p>Number of Pages:</p>
+        <p th:if="${#fields.hasErrors('numOfPages')}" class="alert alert-danger" th:errors="*{numOfPages}"></p>
         <input type="number" th:field="*{numOfPages}" class ="form-control mb-4 col-4">
+
         <p>Recommended Age:</p>
+        <p th:if="${#fields.hasErrors('recommendedAge')}" class="alert alert-danger" th:errors="*{recommendedAge}"></p>
         <input type="number" th:field="*{recommendedAge}" class ="form-control mb-4 col-4">
         <p>Genre:</p>
         <select th:field="*{genre}" class ="form-control mb-4 col-4">

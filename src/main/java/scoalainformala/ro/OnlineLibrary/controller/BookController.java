@@ -1,6 +1,5 @@
 package scoalainformala.ro.OnlineLibrary.controller;
 
-import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -108,7 +107,12 @@ public class BookController {
     }
 
     @RequestMapping(value = "/addBook", method = POST)
-    public String addBook(@ModelAttribute("bookDto") BookDto bookDto) {
+    public String addBook(@Valid @ModelAttribute("bookDto") BookDto bookDto, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()){
+            model.addAttribute("bookDto", bookDto);
+            model.addAttribute("genreList", Genre.values());
+            return "books/book-form";
+        }
         bookService.add(bookDto);
         return "redirect:/listBooks";
     }
