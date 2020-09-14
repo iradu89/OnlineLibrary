@@ -16,6 +16,7 @@ import scoalainformala.ro.OnlineLibrary.dto.AcquisitionDto;
 import scoalainformala.ro.OnlineLibrary.dto.BookDto;
 import scoalainformala.ro.OnlineLibrary.dto.BookReviewDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserEditDto;
+import scoalainformala.ro.OnlineLibrary.exceptions.NotEnoughProductsInStockException;
 import scoalainformala.ro.OnlineLibrary.service.AcquisitionService;
 import scoalainformala.ro.OnlineLibrary.service.BookService;
 import scoalainformala.ro.OnlineLibrary.service.UserService;
@@ -77,11 +78,19 @@ public class BookController {
         return "books/buyBookForm";
     }
 
-    @SneakyThrows
+
     @RequestMapping(value = "confirmPurchase", method = POST)
-    public String confirmPurchase(@ModelAttribute(value ="acquisitionDto") AcquisitionDto acquisitionDto, Model model) {
+    public String confirmPurchase(@ModelAttribute(value = "acquisitionDto") AcquisitionDto acquisitionDto, Model model) {
         log.info(acquisitionDto);
-        log.info(acquisitionService.add(acquisitionDto));
+        try {
+            log.info(acquisitionService.add(acquisitionDto));
+        } catch (NotEnoughProductsInStockException e) {
+            model.addAttribute("outOfStockMessage", e.getMessage());
+            BookDto bookdto = bookService.getBookByID(acquisitionDto.getBookId());
+            Authentication loggedUser = SecurityContextHolder.getContext().getAuthentication();
+            UserEditDto libraryUser = userService.showUser(loggedUser.getName());
+            return buyBook(model, bookdto, libraryUser, new AcquisitionDto());
+        }
         return "redirect:/book/" + acquisitionDto.getBookId();
     }
 

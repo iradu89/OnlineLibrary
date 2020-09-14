@@ -33,6 +33,7 @@
             </div>
         </div>
         <hr class="my-4">
+        <div class="alert alert-info" th:if="${outOfStockMessage}" th:utext="${outOfStockMessage}"></div>
         <form action='#' th:action="@{/confirmPurchase}" th:object="${acquisitionDto}" method='post'>
             <input type="hidden" th:value="${bookDto.id}" name="bookId">
             <input type="hidden" th:value="${libraryUser.email}" name="libUserEmail">
