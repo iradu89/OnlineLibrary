@@ -19,6 +19,7 @@ public enum Genre {
     THRILLER,
     CHILDREN,
     WAR,
+    SEXOLOGY,
     FICTION;
 
     public static Genre getRandomGenre(){
