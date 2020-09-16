@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/buyBook").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers("/confirmPurchase").hasAnyAuthority("ADMIN", "CLIENT")
                 .antMatchers("/").permitAll()
+                .antMatchers("/users/showFormForAdd").permitAll()
                 .and().formLogin();
     }
 

@@ -55,7 +55,7 @@ public class UserController {
             model.addAttribute("errorMessage", e.getMessage());
             return "users/user-form";
         }
-        return "redirect:/users/list";
+        return "index";
     }
 
     @PostMapping("/update")
@@ -63,7 +63,7 @@ public class UserController {
         System.out.println(userEditDto);
         userService.saveUserEdit(userEditDto);
 
-        return "redirect:/users/list";
+        return "index";
     }
 
     @GetMapping("/inactivate")
