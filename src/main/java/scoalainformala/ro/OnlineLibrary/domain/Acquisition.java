@@ -14,10 +14,11 @@ import java.util.UUID;
 @Setter
 @ToString
 public class Acquisition {
-    public Acquisition(Book book, LibraryUser libraryUser, @NotNull LocalDateTime dateTime) {
+    public Acquisition(Book book, LibraryUser libraryUser, @NotNull LocalDateTime dateTime, int quantity) {
         this.book = book;
         this.libraryUser = libraryUser;
         this.dateTime = dateTime;
+        this.quantity = quantity;
     }
 
     @Id
@@ -34,4 +35,7 @@ public class Acquisition {
 
     @NotNull
     private LocalDateTime dateTime;
+
+    @NotNull
+    private int quantity;
 }
