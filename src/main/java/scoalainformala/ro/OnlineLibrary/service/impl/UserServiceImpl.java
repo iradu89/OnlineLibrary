@@ -2,6 +2,7 @@ package scoalainformala.ro.OnlineLibrary.service.impl;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import scoalainformala.ro.OnlineLibrary.domain.LibraryUser;
 import scoalainformala.ro.OnlineLibrary.domain.Role;
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private final UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private EntityVsEdit converter;
@@ -75,6 +79,7 @@ public class UserServiceImpl implements UserService {
     public LibraryUser saveNewUser(UserInsertDto userInsertDto) {
 
         LibraryUser librUser = konverter.convertDto(userInsertDto);
+        librUser.setPassword(passwordEncoder.encode(librUser.getPassword()));
         librUser.setUserRole(Role.BOOK_KEEPER);
         librUser.setActive(true);
         userRepository.save(librUser);
