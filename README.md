@@ -27,3 +27,6 @@ Here only the admin will have access. He will be able to do all the CRUD operati
 
 ## Additional details
 App will have Spring Security implementation. All forms and fields will have validation with a message displayed to the user.
+
+## Web scraper
+In the testing phase of the app a web scraper will be created to automatically import books from the best-selling list of books on wikipedia. It will be helpful because it will automatically work for all the team-members and they won't have to manually add books for testing.
