@@ -1,23 +1,37 @@
 package scoalainformala.ro.OnlineLibrary.controller;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import scoalainformala.ro.OnlineLibrary.domain.Address;
+import scoalainformala.ro.OnlineLibrary.domain.Genre;
+import scoalainformala.ro.OnlineLibrary.dto.BookDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserEditDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserInsertDto;
 import scoalainformala.ro.OnlineLibrary.exceptions.InvalidUserException;
 import scoalainformala.ro.OnlineLibrary.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping("/users")
+@Log4j2
 public class UserController {
 
     private UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/dashboard")
+    public String getDashboard() {
+        return "users/user-welcome";
     }
 
     @GetMapping("/list")
@@ -46,29 +60,37 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute("userInsertDto") UserInsertDto userInsertDto, Model model) {
-        System.out.println(userInsertDto);
-        try {
+
+    public String saveUser(@Valid @ModelAttribute("userInsertDto") UserInsertDto userInsertDto,
+                           BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("userInsertDto", userInsertDto);
-            userService.saveNewUser(userInsertDto);
-        }catch (InvalidUserException e){
-            model.addAttribute("errorMessage", e.getMessage());
             return "users/user-form";
         }
-        return "index";
+        System.out.println(userInsertDto);
+        try {
+            userService.saveNewUser(userInsertDto);
+        } catch (InvalidUserException ex) {
+            log.info("User already in database");
+        }
+        model.addAttribute("email", userInsertDto.getEmail());
+        return "users/register-success";
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute("userEditDto") UserEditDto userEditDto) {
+    public String updateUser(@ModelAttribute("userEditDto") UserEditDto userEditDto, Model model) {
         System.out.println(userEditDto);
         userService.saveUserEdit(userEditDto);
+        model.addAttribute("email", userEditDto.getEmail());
 
-        return "index";
+        return "users/register-success";
     }
 
     @GetMapping("/inactivate")
     public String inactivateUser(@RequestParam("email") String email, Model model) {
-        //TODO userService.inactivateUser();
-        return "redirect:/users/list";
+
+        userService.inactivateUser(email);
+
+        return "users/user-welcome";
     }
 }

@@ -102,6 +102,7 @@ public class UserServiceImpl implements UserService {
     public void inactivateUser(String email) {
         LibraryUser toBeInactivated = userRepository.findByEmail(email);
         toBeInactivated.setActive(false);
+        userRepository.save(toBeInactivated);
     }
 }
 
