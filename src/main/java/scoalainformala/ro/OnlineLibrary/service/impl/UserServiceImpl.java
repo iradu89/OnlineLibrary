@@ -76,11 +76,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LibraryUser saveNewUser(UserInsertDto userInsertDto) {
+    public LibraryUser saveNewUser(UserInsertDto userInsertDto) throws InvalidUserException {
 
         LibraryUser librUser = konverter.convertDto(userInsertDto);
+        if(userRepository.existsByEmail(librUser.getEmail())){
+            throw new InvalidUserException("Mail already used");
+        }
         librUser.setPassword(passwordEncoder.encode(librUser.getPassword()));
-        librUser.setUserRole(Role.BOOK_KEEPER);
+        librUser.setUserRole(Role.CLIENT);
         librUser.setActive(true);
         userRepository.save(librUser);
         return librUser;

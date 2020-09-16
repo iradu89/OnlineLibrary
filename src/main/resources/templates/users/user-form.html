@@ -15,7 +15,7 @@
     <hr>
 
     <p class="h4 mb-4">Save user</p>
-
+    <div class="alert alert-info" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
     <form action="#" th:action="@{/users/save}"
           th:object="${userInsertDto}" method="post">
 

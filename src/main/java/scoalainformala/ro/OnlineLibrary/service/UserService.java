@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import scoalainformala.ro.OnlineLibrary.domain.LibraryUser;
 import scoalainformala.ro.OnlineLibrary.dto.UserEditDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserInsertDto;
+import scoalainformala.ro.OnlineLibrary.exceptions.InvalidUserException;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +18,7 @@ public interface UserService {
 
     public UserEditDto showUser(String email);
 
-    public LibraryUser saveNewUser(UserInsertDto userInsertDto);
+    public LibraryUser saveNewUser(UserInsertDto userInsertDto) throws InvalidUserException;
 
     public UserEditDto saveUserEdit(UserEditDto userEditDto);
 
