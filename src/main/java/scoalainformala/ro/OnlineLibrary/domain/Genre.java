@@ -22,7 +22,7 @@ public enum Genre {
     SEXOLOGY,
     FICTION;
 
-    public static Genre getRandomGenre(){
+    public static Genre getRandomGenre() {
         return values()[new Random().nextInt(values().length)];
     }
 }

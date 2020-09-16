@@ -14,14 +14,14 @@ public class BookTransformer {
         this.modelMapper = modelMapper;
     }
 
-    public BookDto transformBookToBookDto(Book book){
+    public BookDto transformBookToBookDto(Book book) {
         BookDto bookDto = new BookDto();
 
         modelMapper.map(book, bookDto);
         return bookDto;
     }
 
-    public Book transformBookDtoToBook(BookDto bookDto){
+    public Book transformBookDtoToBook(BookDto bookDto) {
         Book book = new Book();
         modelMapper.map(bookDto, book);
         return book;

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 public class BookReview {
     @Id
-    @GeneratedValue(generator="system-uuid")
+    @GeneratedValue(generator = "system-uuid")
     private UUID id;
     private String content;
     private String userName;

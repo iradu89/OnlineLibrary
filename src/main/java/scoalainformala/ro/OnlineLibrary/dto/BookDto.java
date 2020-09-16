@@ -30,8 +30,8 @@ public class BookDto {
     private String title;
 
     @NotNull
-    @Min(value=1, message = "The price must be greater or equal to 1")
-    @Max(value=10000, message = "The price cannot be greater than 10000")
+    @Min(value = 1, message = "The price must be greater or equal to 1")
+    @Max(value = 10000, message = "The price cannot be greater than 10000")
     private double price;
 
     @NotNull()
@@ -41,18 +41,18 @@ public class BookDto {
     private String language;
 
     @NotNull
-    @Min(value=1, message = "The quantity must be greater or equal to 1")
-    @Max(value=5000, message = "The quantity cannot be greater than 5000")
+    @Min(value = 1, message = "The quantity must be greater or equal to 1")
+    @Max(value = 5000, message = "The quantity cannot be greater than 5000")
     private int quantity;
 
     @NotNull
-    @Min(value=1, message = "The number of pages must be greater or equal to 1")
-    @Max(value=8000, message = "The number of pages cannot be greater than 8000")
+    @Min(value = 1, message = "The number of pages must be greater or equal to 1")
+    @Max(value = 8000, message = "The number of pages cannot be greater than 8000")
     private int numOfPages;
 
     @NotNull
-    @Min(value=3, message = "The recommended age must be greater or equal to 3")
-    @Max(value=18, message = "The recommended age cannot be greater than 18")
+    @Min(value = 3, message = "The recommended age must be greater or equal to 3")
+    @Max(value = 18, message = "The recommended age cannot be greater than 18")
     private int recommendedAge;
 
     private Genre genre;

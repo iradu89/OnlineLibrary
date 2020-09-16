@@ -13,7 +13,7 @@ public class BookReviewTransformer {
         this.modelMapper = modelMapper;
     }
 
-    public BookReview transformBookReviewDtoToBookReview(BookReviewDto bookReviewDto){
+    public BookReview transformBookReviewDtoToBookReview(BookReviewDto bookReviewDto) {
         BookReview bookReview = new BookReview();
 
         modelMapper.map(bookReviewDto, bookReview);

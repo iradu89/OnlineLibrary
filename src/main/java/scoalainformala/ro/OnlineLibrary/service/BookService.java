@@ -3,7 +3,6 @@ package scoalainformala.ro.OnlineLibrary.service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import scoalainformala.ro.OnlineLibrary.domain.Book;
-import scoalainformala.ro.OnlineLibrary.domain.BookReview;
 import scoalainformala.ro.OnlineLibrary.dto.BookDto;
 import scoalainformala.ro.OnlineLibrary.dto.BookReviewDto;
 
@@ -22,10 +21,10 @@ public interface BookService {
     @Transactional(rollbackFor = Exception.class)
     void deleteById(UUID id);
 
-    @Transactional (readOnly = true)
+    @Transactional(readOnly = true)
     List<Book> getAllForBackend();
 
-    @Transactional (readOnly = true)
+    @Transactional(readOnly = true)
     List<BookDto> getAllForFrontEnd();
 
     @Transactional(rollbackFor = Exception.class)

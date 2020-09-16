@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
         List<LibraryUser> libList = findAll();
 
         for (LibraryUser lib : libList) {
-        UserEditDto conv = converter.convertEntity(lib);
-        finalList.add(conv);
+            UserEditDto conv = converter.convertEntity(lib);
+            finalList.add(conv);
         }
         return finalList;
     }

@@ -15,7 +15,7 @@ public class UserController {
 
     private UserService userService;
 
-    public UserController (UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -26,6 +26,7 @@ public class UserController {
         model.addAttribute("users", userList);
         return "users/list-users";
     }
+
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model model) {
 
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute ("userInsertDto") UserInsertDto userInsertDto) {
+    public String saveUser(@ModelAttribute("userInsertDto") UserInsertDto userInsertDto) {
         System.out.println(userInsertDto);
         userService.saveNewUser(userInsertDto);
 
@@ -52,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute ("userEditDto") UserEditDto userEditDto) {
+    public String updateUser(@ModelAttribute("userEditDto") UserEditDto userEditDto) {
         System.out.println(userEditDto);
         userService.saveUserEdit(userEditDto);
 
@@ -60,7 +61,7 @@ public class UserController {
     }
 
     @GetMapping("/inactivate")
-    public String inactivateUser(@RequestParam ("email") String email, Model model) {
+    public String inactivateUser(@RequestParam("email") String email, Model model) {
         //TODO userService.inactivateUser();
         return "redirect:/users/list";
     }

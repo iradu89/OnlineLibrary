@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import scoalainformala.ro.OnlineLibrary.domain.LibraryUser;
 import scoalainformala.ro.OnlineLibrary.dto.UserEditDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserInsertDto;
-import scoalainformala.ro.OnlineLibrary.exceptions.InvalidUserException;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +11,7 @@ import java.util.UUID;
 @Service
 public interface UserService {
 
-    public List<UserEditDto>getAll();
+    public List<UserEditDto> getAll();
 
     public LibraryUser findByEmail(String email);
 

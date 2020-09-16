@@ -3,7 +3,6 @@ package scoalainformala.ro.OnlineLibrary.transformer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import scoalainformala.ro.OnlineLibrary.domain.LibraryUser;
-import scoalainformala.ro.OnlineLibrary.domain.Role;
 import scoalainformala.ro.OnlineLibrary.dto.UserInsertDto;
 
 @Component

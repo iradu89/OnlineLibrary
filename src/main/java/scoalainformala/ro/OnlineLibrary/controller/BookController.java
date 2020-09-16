@@ -56,7 +56,6 @@ public class BookController {
             model.addAttribute("bookId", bookReviewDto.getBookId());
             model.addAttribute("bookDto", bookDto);
             model.addAttribute("bookReviewDto", bookReviewDto);
-            log.info(bindingResult);
             return "books/book";
         }
         log.info(bookReviewDto);
@@ -80,7 +79,6 @@ public class BookController {
 
     @RequestMapping(value = "confirmPurchase", method = POST)
     public String confirmPurchase(@ModelAttribute(value = "acquisitionDto") AcquisitionDto acquisitionDto, Model model) {
-        log.info(acquisitionDto);
         try {
             log.info(acquisitionService.add(acquisitionDto));
         } catch (NotEnoughProductsInStockException e) {
@@ -108,7 +106,7 @@ public class BookController {
 
     @RequestMapping(value = "/addBook", method = POST)
     public String addBook(@Valid @ModelAttribute("bookDto") BookDto bookDto, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("bookDto", bookDto);
             model.addAttribute("genreList", Genre.values());
             return "books/book-form";

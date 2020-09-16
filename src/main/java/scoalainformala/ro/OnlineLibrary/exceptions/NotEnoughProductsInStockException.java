@@ -2,8 +2,8 @@ package scoalainformala.ro.OnlineLibrary.exceptions;
 
 import scoalainformala.ro.OnlineLibrary.domain.Book;
 
-public class NotEnoughProductsInStockException extends Exception{
-    public NotEnoughProductsInStockException(String message){
+public class NotEnoughProductsInStockException extends Exception {
+    public NotEnoughProductsInStockException(String message) {
         super(message);
     }
 
