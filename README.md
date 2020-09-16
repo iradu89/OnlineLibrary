@@ -20,7 +20,7 @@ This page or pages will only be accessable by the Book Keeper. His responsabilit
 Here only the admin will have access. He will be able to do all the CRUD operations on users. Also, regular users will be able to create and modify their own accounts.
 
 ### Entity Relationship Diagram:
-![ERD](https://i.imgur.com/zCyJtup.png)
+![ERD](https://i.imgur.com/QBhIYb2.png)
 
 ### Flows separated between teammates:
 ![TEAMFLOW](https://i.imgur.com/t7yTjv0.png)
