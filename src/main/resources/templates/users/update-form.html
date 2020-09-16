@@ -11,10 +11,9 @@
 <div class="container">
     <div th:replace="/fragments/navbar :: navbar"/>
 
-    <h3>Update user</h3>
     <hr>
 
-    <p class="h4 mb-4">Save changes</p>
+    <p class="h4 mb-4">User update form</p>
 
     <form action="#" th:action="@{/users/update}"
           th:object="${userEditDto}" method="post">
@@ -43,12 +42,11 @@
         <input type="text" th:field="*{address.zipCode}"
                class="form-control mb-4 col-4" placeholder="Zip code">
 
-        <button type="submit" class="btn btn-info col-2">Save</button>
+        <button type="submit" class="btn btn-info col-2">Update</button>
 
     </form>
 
     <hr>
-    <a th:href="@{/users/list}">Back to library users List</a>
 
 </div>
 </body>

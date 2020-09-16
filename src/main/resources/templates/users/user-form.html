@@ -3,52 +3,55 @@
 
 <head>
     <div th:replace="/fragments/navbar :: header"/>
-    <title>Save User</title>
+    <title>Online library - Register new user</title>
 </head>
 
 <body>
 
 <div class="container">
     <div th:replace="/fragments/navbar :: navbar"/>
-
-    <h3>Save user</h3>
     <hr>
 
-    <p class="h4 mb-4">Save user</p>
-    <div class="alert alert-info" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
+    <p class="h4 mb-4">Register new user</p>
+
     <form action="#" th:action="@{/users/save}"
           th:object="${userInsertDto}" method="post">
 
+
         <input type="text" th:field="*{name}"
                class="form-control mb-4 col-4" placeholder="Full name">
+        <p th:if="${#fields.hasErrors('name')}" class="alert alert-danger" th:errors="*{name}"></p>
+
 
         <input type="text" th:field="*{email}"
                class="form-control mb-4 col-4" placeholder="Email">
+        <p th:if="${#fields.hasErrors('email')}" class="alert alert-danger" th:errors="*{email}"></p>
+
 
         <input type="text" th:field="*{password}"
                class="form-control mb-4 col-4" placeholder="Password">
+        <p th:if="${#fields.hasErrors('password')}" class="alert alert-danger" th:errors="*{password}"></p>
 
         <input type="text" th:field="*{address.streetName}"
-               class="form-control mb-4 col-4" placeholder="Street name">
+               class="form-control mb-4 col-4" placeholder="Street name (optional)">
 
         <input type="text" th:field="*{address.streetNumber}"
-               class="form-control mb-4 col-4" placeholder="Street number">
+               class="form-control mb-4 col-4" placeholder="Street number (optional)">
 
         <input type="text" th:field="*{address.city}"
-               class="form-control mb-4 col-4" placeholder="City">
+               class="form-control mb-4 col-4" placeholder="City (optional)">
 
         <input type="text" th:field="*{address.country}"
-               class="form-control mb-4 col-4" placeholder="Country">
+               class="form-control mb-4 col-4" placeholder="Country (optional)">
 
         <input type="text" th:field="*{address.zipCode}"
-               class="form-control mb-4 col-4" placeholder="Zip code">
+               class="form-control mb-4 col-4" placeholder="Zipcode (optional)">
 
-        <button type="submit" class="btn btn-info col-2">Save</button>
+        <button type="submit" class="btn btn-info col-2">Register</button>
 
     </form>
 
     <hr>
-    <a th:href="@{/users/list}">Back to library users List</a>
 
 </div>
 </body>

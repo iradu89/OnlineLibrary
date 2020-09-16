@@ -18,11 +18,11 @@ public interface UserService {
 
     public UserEditDto showUser(String email);
 
-    public LibraryUser saveNewUser(UserInsertDto userInsertDto) throws InvalidUserException;
+    public LibraryUser saveNewUser(UserInsertDto userInsertDto) throws InvalidUserException, InvalidUserException;
 
     public UserEditDto saveUserEdit(UserEditDto userEditDto);
 
-    public void deleteById(UUID id);
+    public void inactivateUser(String email);
 
     public List<LibraryUser> findAll();
 }

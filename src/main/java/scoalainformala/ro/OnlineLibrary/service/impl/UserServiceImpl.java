@@ -79,11 +79,11 @@ public class UserServiceImpl implements UserService {
     public LibraryUser saveNewUser(UserInsertDto userInsertDto) throws InvalidUserException {
 
         LibraryUser librUser = konverter.convertDto(userInsertDto);
-        if(userRepository.existsByEmail(librUser.getEmail())){
-            throw new InvalidUserException("Mail already used");
+        if (userRepository.existsByEmail(librUser.getEmail())) {
+            throw new InvalidUserException("Username already in database");
         }
         librUser.setPassword(passwordEncoder.encode(librUser.getPassword()));
-        librUser.setUserRole(Role.CLIENT);
+        librUser.setUserRole(Role.ADMIN);
         librUser.setActive(true);
         userRepository.save(librUser);
         return librUser;
@@ -93,12 +93,15 @@ public class UserServiceImpl implements UserService {
     public UserEditDto saveUserEdit(UserEditDto userEditDto) {
 
         LibraryUser libU = converter.convertDto(userEditDto);
+        libU.setPassword(passwordEncoder.encode(libU.getPassword()));
         userRepository.save(libU);
         return converter.convertEntity(libU);
     }
 
     @Override
-    public void deleteById(UUID id) {
-//TODO to be implemented
+    public void inactivateUser(String email) {
+        LibraryUser toBeInactivated = userRepository.findByEmail(email);
+        toBeInactivated.setActive(false);
     }
 }
+
