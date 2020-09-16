@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
             throw new InvalidUserException("Username already in database");
         }
         librUser.setPassword(passwordEncoder.encode(librUser.getPassword()));
-        librUser.setUserRole(Role.ADMIN);
+        librUser.setUserRole(Role.CLIENT);
         librUser.setActive(true);
         userRepository.save(librUser);
         return librUser;
