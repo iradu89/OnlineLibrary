@@ -1,4 +1,5 @@
 package scoalainformala.ro.OnlineLibrary.domain;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +15,8 @@ import java.util.UUID;
 @Entity
 public class Book {
 
-    public Book(){}
+    public Book() {
+    }
 
     public Book(String author, String title, double price, String language, int quantity, int numOfPages, int recommendedAge, Genre genre) {
         this.author = author;
@@ -28,7 +30,7 @@ public class Book {
     }
 
     @Id
-    @GeneratedValue(generator="system-uuid")
+    @GeneratedValue(generator = "system-uuid")
     private UUID id;
     private String author;
     private String title;
@@ -40,7 +42,7 @@ public class Book {
     private Genre genre;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="BOOK_ID")
+    @JoinColumn(name = "BOOK_ID")
     private Set<BookReview> bookReviewSet;
 
     @Override

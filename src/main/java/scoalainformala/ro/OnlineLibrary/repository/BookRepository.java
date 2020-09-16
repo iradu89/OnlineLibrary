@@ -6,5 +6,4 @@ import scoalainformala.ro.OnlineLibrary.domain.Book;
 import java.util.UUID;
 
 public interface BookRepository extends CrudRepository<Book, UUID> {
-
 }

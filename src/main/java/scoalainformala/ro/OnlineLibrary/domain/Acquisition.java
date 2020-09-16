@@ -1,4 +1,5 @@
 package scoalainformala.ro.OnlineLibrary.domain;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,15 +21,15 @@ public class Acquisition {
     }
 
     @Id
-    @GeneratedValue(generator="system-uuid")
+    @GeneratedValue(generator = "system-uuid")
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name="BOOK_ID")
+    @JoinColumn(name = "BOOK_ID")
     private Book book;
 
     @ManyToOne
-    @JoinColumn(name="LIBRARYUSER_ID")
+    @JoinColumn(name = "LIBRARYUSER_ID")
     private LibraryUser libraryUser;
 
     @NotNull

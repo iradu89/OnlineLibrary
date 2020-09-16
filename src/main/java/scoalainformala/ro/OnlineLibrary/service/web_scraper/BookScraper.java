@@ -61,8 +61,8 @@ public class BookScraper {
                         .split(" ")[0].split(",")[0].split("'")[0];
 
                 //it's not the same everywhere so this is needed
-                if (genre.contains("-")){
-                    genre = genre.replace("-",  "_");
+                if (genre.contains("-")) {
+                    genre = genre.replace("-", "_");
                 }
 
                 if (genre.isEmpty()) {

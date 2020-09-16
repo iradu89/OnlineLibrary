@@ -17,18 +17,18 @@ public class MyUserDetails implements UserDetails {
     private List<SimpleGrantedAuthority> authority;
 
 
-        public MyUserDetails(LibraryUser libUser) {
-            this.username = libUser.getEmail();
-            this.password = libUser.getPassword();
-            this.isActive = libUser.isActive();
-            authority = new ArrayList<>();
-            authority.add(new SimpleGrantedAuthority(libUser.getUserRole().toString()));
-            authority.forEach(System.out::println);
-        }
+    public MyUserDetails(LibraryUser libUser) {
+        this.username = libUser.getEmail();
+        this.password = libUser.getPassword();
+        this.isActive = libUser.isActive();
+        authority = new ArrayList<>();
+        authority.add(new SimpleGrantedAuthority(libUser.getUserRole().toString()));
+        authority.forEach(System.out::println);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authority ;
+        return authority;
     }
 
     @Override

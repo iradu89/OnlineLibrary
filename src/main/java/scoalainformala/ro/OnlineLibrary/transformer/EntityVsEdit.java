@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import scoalainformala.ro.OnlineLibrary.domain.LibraryUser;
 import scoalainformala.ro.OnlineLibrary.dto.UserEditDto;
-import scoalainformala.ro.OnlineLibrary.exceptions.InvalidUserException;
 import scoalainformala.ro.OnlineLibrary.service.UserService;
 
 @Component
