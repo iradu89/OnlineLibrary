@@ -22,7 +22,7 @@
                class="form-control mb-4 col-4" placeholder="Full name">
         <p th:if="${#fields.hasErrors('name')}" class="alert alert-danger" th:errors="*{name}"></p>
 
-
+        <div class="alert alert-info" th:if="${errorMessage}" th:utext="${errorMessage}"></div>
         <input type="text" th:field="*{email}"
                class="form-control mb-4 col-4" placeholder="Email">
         <p th:if="${#fields.hasErrors('email')}" class="alert alert-danger" th:errors="*{email}"></p>

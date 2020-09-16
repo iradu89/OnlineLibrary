@@ -21,6 +21,9 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         LibraryUser libUser = userRepository.findByEmail(email);
+        if (libUser == null) {
+            throw new UsernameNotFoundException("No such user exists.");
+        }
         return new MyUserDetails(libUser);
 
     }
