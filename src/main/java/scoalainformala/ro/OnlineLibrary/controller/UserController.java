@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import scoalainformala.ro.OnlineLibrary.dto.UserEditDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserInsertDto;
+import scoalainformala.ro.OnlineLibrary.exceptions.InvalidUserException;
 import scoalainformala.ro.OnlineLibrary.service.UserService;
 
 import java.util.List;
@@ -45,10 +46,15 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute("userInsertDto") UserInsertDto userInsertDto) {
+    public String saveUser(@ModelAttribute("userInsertDto") UserInsertDto userInsertDto, Model model) {
         System.out.println(userInsertDto);
-        userService.saveNewUser(userInsertDto);
-
+        try {
+            model.addAttribute("userInsertDto", userInsertDto);
+            userService.saveNewUser(userInsertDto);
+        }catch (InvalidUserException e){
+            model.addAttribute("errorMessage", e.getMessage());
+            return "users/user-form";
+        }
         return "redirect:/users/list";
     }
 
