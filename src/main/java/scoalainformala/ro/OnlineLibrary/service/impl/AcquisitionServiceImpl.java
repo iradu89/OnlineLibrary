@@ -29,11 +29,14 @@ public class AcquisitionServiceImpl implements AcquisitionService {
     public Acquisition add(AcquisitionDto acquisitionDto) throws NotEnoughProductsInStockException {
         LibraryUser libUser = userRepository.findByEmail(acquisitionDto.getLibUserEmail());
         Book book = bookRepository.findById(acquisitionDto.getBookId()).orElseThrow();
+        if (acquisitionDto.getQuantity() <= 0){
+            throw new NotEnoughProductsInStockException("Please select a valid number, 0 is not a valid number");
+        }
         if (book.getQuantity() - acquisitionDto.getQuantity() > 0) {
             book.setQuantity(book.getQuantity() - acquisitionDto.getQuantity());
             bookRepository.save(book);
         } else throw new NotEnoughProductsInStockException(book);
-        Acquisition acquisition = new Acquisition(book, libUser, LocalDateTime.now());
+        Acquisition acquisition = new Acquisition(book, libUser, LocalDateTime.now(), acquisitionDto.getQuantity());
         return acquisitionRepository.save(acquisition);
     }
 }
