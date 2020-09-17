@@ -34,7 +34,6 @@ public class MyPasswordValidator implements ConstraintValidator<ValidPassword, S
 
                 new CharacterRule(EnglishCharacterData.Special, 1),
 
-                // no whitespace
                 new WhitespaceRule()
 
         ));

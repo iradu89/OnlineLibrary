@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
             throw new InvalidUserException("Username already in database");
         }
         librUser.setPassword(passwordEncoder.encode(librUser.getPassword()));
-        librUser.setUserRole(Role.ADMIN);
+        librUser.setUserRole(Role.BOOK_KEEPER);
         librUser.setActive(true);
         userRepository.save(librUser);
         return librUser;
@@ -103,6 +103,13 @@ public class UserServiceImpl implements UserService {
         LibraryUser toBeInactivated = userRepository.findByEmail(email);
         toBeInactivated.setActive(false);
         userRepository.save(toBeInactivated);
+    }
+
+    @Override
+    public void activateUser(String email) {
+        LibraryUser inactiveUser = userRepository.findByEmail(email);
+        inactiveUser.setActive(true);
+        userRepository.save(inactiveUser);
     }
 }
 

@@ -24,5 +24,7 @@ public interface UserService {
 
     public void inactivateUser(String email);
 
+    public void activateUser(String email);
+
     public List<LibraryUser> findAll();
 }
