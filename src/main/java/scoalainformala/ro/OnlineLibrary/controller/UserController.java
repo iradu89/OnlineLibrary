@@ -92,6 +92,6 @@ public class UserController {
     public String inactivateUser(@RequestParam("email") String email, Model model) {
 
         userService.inactivateUser(email);
-        return "users/user-welcome";
+        return "redirect:/users/list";
     }
 }

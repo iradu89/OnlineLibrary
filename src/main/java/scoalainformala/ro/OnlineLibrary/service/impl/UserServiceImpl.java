@@ -1,6 +1,7 @@
 package scoalainformala.ro.OnlineLibrary.service.impl;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -88,10 +89,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEditDto saveUserEdit(UserEditDto userEditDto) {
 
-        LibraryUser libU = converter.convertDto(userEditDto);
+        LibraryUser libU = userRepository.findByEmail(userEditDto.getEmail());
+        BeanUtils.copyProperties(userEditDto, libU, "id", "email", "role");
         libU.setPassword(passwordEncoder.encode(libU.getPassword()));
         userRepository.save(libU);
-        return converter.convertEntity(libU);
+        return userEditDto;
     }
 
     @Override

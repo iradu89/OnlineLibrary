@@ -28,6 +28,7 @@ public class UserInsertDto {
     private String name;
 
     @Email(message = "Please insert a valid email.")
+    @NotBlank
     private String email;
 
     @NotBlank

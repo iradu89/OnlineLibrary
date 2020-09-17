@@ -35,7 +35,8 @@
         <input type="text" th:field="*{address.streetName}"
                class="form-control mb-4 col-4" placeholder="Street name (optional)">
 
-        <input type="text" th:field="*{address.streetNumber}"
+        <p>Street Number: </p>
+        <input type="number" th:field="*{address.streetNumber}"
                class="form-control mb-4 col-4" placeholder="Street number (optional)">
 
         <input type="text" th:field="*{address.city}"
@@ -43,8 +44,8 @@
 
         <input type="text" th:field="*{address.country}"
                class="form-control mb-4 col-4" placeholder="Country (optional)">
-
-        <input type="text" th:field="*{address.zipCode}"
+        <p>Zip Code: </p>
+        <input type="number" th:field="*{address.zipCode}"
                class="form-control mb-4 col-4" placeholder="Zipcode (optional)">
 
         <button type="submit" class="btn btn-info col-2">Register</button>

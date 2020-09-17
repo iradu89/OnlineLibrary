@@ -1,5 +1,7 @@
 package scoalainformala.ro.OnlineLibrary.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import scoalainformala.ro.OnlineLibrary.domain.Address;
 import scoalainformala.ro.OnlineLibrary.validation.ValidPassword;
@@ -12,6 +14,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @ToString
+@Getter
+@Setter
 public class UserEditDto {
 
     @NotBlank

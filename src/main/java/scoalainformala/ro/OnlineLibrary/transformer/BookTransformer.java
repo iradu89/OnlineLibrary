@@ -16,7 +16,6 @@ public class BookTransformer {
 
     public BookDto transformBookToBookDto(Book book) {
         BookDto bookDto = new BookDto();
-
         modelMapper.map(book, bookDto);
         return bookDto;
     }
