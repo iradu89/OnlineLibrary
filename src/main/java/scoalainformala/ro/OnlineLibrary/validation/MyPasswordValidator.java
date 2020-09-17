@@ -14,8 +14,10 @@ public class MyPasswordValidator implements ConstraintValidator<ValidPassword, S
     public void initialize(ValidPassword arg0) {
     }
 
-    /** validation principles:
+    /**
+     * validation principles:
      * 8-20 characters, min. 1 uppercase, 1 lowercase, 1 digit, 1 special character
+     *
      * @param password
      * @param context
      * @return true if valid
@@ -25,16 +27,10 @@ public class MyPasswordValidator implements ConstraintValidator<ValidPassword, S
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
 
                 new LengthRule(8, 20),
-
                 new CharacterRule(EnglishCharacterData.UpperCase, 1),
-
                 new CharacterRule(EnglishCharacterData.LowerCase, 1),
-
                 new CharacterRule(EnglishCharacterData.Digit, 1),
-
                 new CharacterRule(EnglishCharacterData.Special, 1),
-
-                // no whitespace
                 new WhitespaceRule()
 
         ));

@@ -5,9 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import scoalainformala.ro.OnlineLibrary.domain.Address;
-import scoalainformala.ro.OnlineLibrary.domain.Genre;
-import scoalainformala.ro.OnlineLibrary.dto.BookDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserEditDto;
 import scoalainformala.ro.OnlineLibrary.dto.UserInsertDto;
 import scoalainformala.ro.OnlineLibrary.exceptions.InvalidUserException;
@@ -16,11 +13,9 @@ import scoalainformala.ro.OnlineLibrary.service.UserService;
 import javax.validation.Valid;
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
+@Log4j2
 @Controller
 @RequestMapping("/users")
-@Log4j2
 public class UserController {
 
     private UserService userService;
@@ -31,6 +26,7 @@ public class UserController {
 
     @GetMapping("/dashboard")
     public String getDashboard() {
+
         return "users/user-welcome";
     }
 
@@ -47,7 +43,6 @@ public class UserController {
 
         UserInsertDto userInsertDto = new UserInsertDto();
         model.addAttribute("userInsertDto", userInsertDto);
-
         return "users/user-form";
     }
 
@@ -63,15 +58,18 @@ public class UserController {
 
     public String saveUser(@Valid @ModelAttribute("userInsertDto") UserInsertDto userInsertDto,
                            BindingResult bindingResult, Model model) {
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("userInsertDto", userInsertDto);
             return "users/user-form";
         }
-        System.out.println(userInsertDto);
+        log.info(userInsertDto);
         try {
             userService.saveNewUser(userInsertDto);
         } catch (InvalidUserException ex) {
-            log.info("User already in database");
+            log.info("User " + userInsertDto.getEmail() + " is already in database.");
+            model.addAttribute("email", userInsertDto.getEmail());
+            return "users/register-error";
         }
         model.addAttribute("email", userInsertDto.getEmail());
         return "users/register-success";
@@ -79,10 +77,9 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("userEditDto") UserEditDto userEditDto, Model model) {
-        System.out.println(userEditDto);
+
         userService.saveUserEdit(userEditDto);
         model.addAttribute("email", userEditDto.getEmail());
-
         return "users/register-success";
     }
 
@@ -90,7 +87,6 @@ public class UserController {
     public String inactivateUser(@RequestParam("email") String email, Model model) {
 
         userService.inactivateUser(email);
-
         return "users/user-welcome";
     }
 }

@@ -20,12 +20,14 @@
 
         <input type="text" th:field="*{name}"
                class="form-control mb-4 col-4" placeholder="Full name">
+        <p th:if="${#fields.hasErrors('name')}" class="alert alert-danger" th:errors="*{name}"></p>
 
         <!-- hidden field = email -->
         <input type="hidden" th:field="*{email}"/>
 
         <input type="text" th:field="*{password}"
                class="form-control mb-4 col-4" placeholder="Password">
+        <p th:if="${#fields.hasErrors('password')}" class="alert alert-danger" th:errors="*{password}"></p>
 
         <input type="text" th:field="*{address.streetName}"
                class="form-control mb-4 col-4" placeholder="Street name">

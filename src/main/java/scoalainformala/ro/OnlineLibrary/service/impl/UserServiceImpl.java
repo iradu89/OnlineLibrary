@@ -16,28 +16,26 @@ import scoalainformala.ro.OnlineLibrary.transformer.EntityVsInsert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Log4j2
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    private final EntityVsEdit converter;
+
+    private final EntityVsInsert konverter;
 
     @Autowired
-    private EntityVsEdit converter;
-
-    @Autowired
-    private EntityVsInsert konverter;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, EntityVsEdit converter, EntityVsInsert konverter) {
 
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.converter = converter;
+        this.konverter = konverter;
     }
 
     public List<UserEditDto> getAll() {
@@ -46,8 +44,10 @@ public class UserServiceImpl implements UserService {
         List<LibraryUser> libList = findAll();
 
         for (LibraryUser lib : libList) {
-            UserEditDto conv = converter.convertEntity(lib);
-            finalList.add(conv);
+            if(lib.isActive()) {
+                UserEditDto conv = converter.convertEntity(lib);
+                finalList.add(conv);
+            }
         }
         return finalList;
     }
@@ -62,17 +62,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public LibraryUser findByEmail(String email) {
 
-        LibraryUser existingUser = userRepository.findByEmail(email);
-        return existingUser;
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public UserEditDto showUser(String email) {
 
-        UserEditDto servedDto = new UserEditDto();
         LibraryUser libUser = userRepository.findByEmail(email);
-        servedDto = converter.convertEntity(libUser);
-        return servedDto;
+        return converter.convertEntity(libUser);
     }
 
     @Override
@@ -85,8 +82,7 @@ public class UserServiceImpl implements UserService {
         librUser.setPassword(passwordEncoder.encode(librUser.getPassword()));
         librUser.setUserRole(Role.CLIENT);
         librUser.setActive(true);
-        userRepository.save(librUser);
-        return librUser;
+        return userRepository.save(librUser);
     }
 
     @Override
@@ -103,6 +99,13 @@ public class UserServiceImpl implements UserService {
         LibraryUser toBeInactivated = userRepository.findByEmail(email);
         toBeInactivated.setActive(false);
         userRepository.save(toBeInactivated);
+    }
+
+    @Override
+    public void activateUser(String email) {
+        LibraryUser inactiveUser = userRepository.findByEmail(email);
+        inactiveUser.setActive(true);
+        userRepository.save(inactiveUser);
     }
 }
 
