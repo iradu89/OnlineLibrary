@@ -16,22 +16,17 @@ import scoalainformala.ro.OnlineLibrary.transformer.EntityVsInsert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Log4j2
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private final UserRepository userRepository;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
     private EntityVsEdit converter;
 
-    @Autowired
     private EntityVsInsert konverter;
 
     @Autowired
@@ -69,10 +64,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEditDto showUser(String email) {
 
-        UserEditDto servedDto = new UserEditDto();
         LibraryUser libUser = userRepository.findByEmail(email);
-        servedDto = converter.convertEntity(libUser);
-        return servedDto;
+        return converter.convertEntity(libUser);
     }
 
     @Override

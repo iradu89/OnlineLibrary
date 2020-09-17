@@ -78,7 +78,7 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("userEditDto") UserEditDto userEditDto, Model model) {
-        System.out.println(userEditDto);
+
         userService.saveUserEdit(userEditDto);
         model.addAttribute("email", userEditDto.getEmail());
 
