@@ -76,8 +76,13 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute("userEditDto") UserEditDto userEditDto, Model model) {
+    public String updateUser(@Valid @ModelAttribute("userEditDto") UserEditDto userEditDto,
+                             BindingResult bindingResult, Model model) {
 
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("userEditDto", userEditDto);
+            return "users/update-form";
+        }
         userService.saveUserEdit(userEditDto);
         model.addAttribute("email", userEditDto.getEmail());
         return "users/register-success";
