@@ -31,7 +31,7 @@ public class UserInsertDto {
     private String email;
 
     @NotBlank
-    @ValidPassword
+    @ValidPassword(message = "invalid password")
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)

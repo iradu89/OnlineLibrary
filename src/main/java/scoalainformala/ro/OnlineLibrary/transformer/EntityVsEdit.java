@@ -10,7 +10,6 @@ import scoalainformala.ro.OnlineLibrary.service.UserService;
 @Component
 public class EntityVsEdit implements Transformer<LibraryUser, UserEditDto> {
 
-    @Autowired
     UserService userService;
 
     @Override

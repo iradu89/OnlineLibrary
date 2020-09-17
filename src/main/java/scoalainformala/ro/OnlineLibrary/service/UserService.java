@@ -7,7 +7,6 @@ import scoalainformala.ro.OnlineLibrary.dto.UserInsertDto;
 import scoalainformala.ro.OnlineLibrary.exceptions.InvalidUserException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public interface UserService {
@@ -23,6 +22,8 @@ public interface UserService {
     public UserEditDto saveUserEdit(UserEditDto userEditDto);
 
     public void inactivateUser(String email);
+
+    public void activateUser(String email);
 
     public List<LibraryUser> findAll();
 }
