@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +17,6 @@ public class Address {
     @GeneratedValue(generator = "system-uuid")
     private UUID id;
 
-    @NotBlank
     private String streetName;
 
     private int streetNumber;

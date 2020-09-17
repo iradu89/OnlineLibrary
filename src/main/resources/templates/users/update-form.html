@@ -32,6 +32,7 @@
         <input type="text" th:field="*{address.streetName}"
                class="form-control mb-4 col-4" placeholder="Street name">
 
+        <p>Street Number: </p>
         <input type="text" th:field="*{address.streetNumber}"
                class="form-control mb-4 col-4" placeholder="Street number">
 
@@ -41,7 +42,8 @@
         <input type="text" th:field="*{address.country}"
                class="form-control mb-4 col-4" placeholder="Country">
 
-        <input type="text" th:field="*{address.zipCode}"
+        <p>Zip Code: </p>
+        <input type="number" th:field="*{address.zipCode}"
                class="form-control mb-4 col-4" placeholder="Zip code">
 
         <button type="submit" class="btn btn-info col-2">Update</button>
